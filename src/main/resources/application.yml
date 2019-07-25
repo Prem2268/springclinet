@@ -1,0 +1,13 @@
+server:
+  port: 8006
+  ssl:
+    enabled: true
+    client-auth: need
+    key-store: @project.basedir@/secrets/nt-gateway.jks
+    key-store-password: changeit
+    key-alias: nt-gateway
+    key-store-type: JKS
+    key-store-provider: SUN
+    trust-store: @project.basedir@/secrets/nt-gateway.jks
+    trust-store-password: changeit
+    trust-store-type: JKS
