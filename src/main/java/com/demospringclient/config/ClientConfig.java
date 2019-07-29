@@ -1,4 +1,4 @@
-package com.sample.springclient.config;
+package com.demospringclient.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +8,8 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+
+import javax.net.ssl.SSLContext;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
@@ -39,11 +41,13 @@ public class ClientConfig {
 	@Bean
 	public RestTemplate getRestTemplate() throws KeyManagementException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, CertificateException, IOException {
 		RestTemplate restTemplate = new RestTemplate();
-
-		SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(new SSLContextBuilder()
-				.loadTrustMaterial(null, new TrustSelfSignedStrategy())
-				.loadKeyMaterial(new File(keyStore), "changeit".toCharArray(), "changeit".toCharArray()).build(),
-				NoopHostnameVerifier.INSTANCE);
+		
+		SSLContext sslContext = new SSLContextBuilder()
+//				.loadTrustMaterial(null, new TrustSelfSignedStrategy())
+				.loadTrustMaterial(new File(trustStore), "changeit".toCharArray())
+				.loadKeyMaterial(new File(keyStore), "changeit".toCharArray(), "changeit".toCharArray()).build();
+		
+		SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
 
 		HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(socketFactory)
 				.build();
