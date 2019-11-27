@@ -13,7 +13,7 @@
 	<artifactId>springclient</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>springclient</name>
-	<description>ssl spring demo clientssss</description>
+	<description>ssl spring demo client</description>
 
 	<properties>
 		<java.version>1.8</java.version>
